@@ -53,10 +53,13 @@ src/
  └── main/
      ├── java/
      │   ├── module-info.java             # module declarations (requires javafx.controls, javafx.fxml)
-     │   └── com.example.cab302_project/
+     │   └── com.app.studysnap/
      │       ├── Main.java                # entry point, launches UI
-     │       └── MainController.java      # controller bound to FXML
+     │       └── controllers
+     │           └── controller.java      # different controllers bound to FXML
      └── resources/
-         └── com.example.cab302_project/
-             └── hello-view.fxml          # UI layout
+         └── com.app.studysnap/
+             ├── content.fxml             # UI layout files
+     │       └── styles
+     │           └── style.css            # different css files
 ```
