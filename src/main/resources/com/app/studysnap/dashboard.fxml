@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<BorderPane fx:controller="com.app.studysnap.controllers.SignupController"
+            stylesheets="@styles/dashboard.css"
+            xmlns:fx="http://javafx.com/fxml"
+            prefWidth="900" prefHeight="600">
+
+    <!-- Sidebar -->
+    <left>
+        <VBox styleClass="sidebar" spacing="10" alignment="TOP_CENTER">
+            <Label text="📊 StudySnap" styleClass="sidebar-title"/>
+            <Button text="Home" styleClass="sidebar-btn"/>
+            <Button text="Profile" styleClass="sidebar-btn"/>
+            <Button text="Settings" styleClass="sidebar-btn"/>
+            <Button text="Logout" styleClass="sidebar-btn"/>
+        </VBox>
+    </left>
+
+    <!-- Main content -->
+    <center>
+        <StackPane styleClass="main-content">
+            <Label text="Main Content Area" styleClass="placeholder"/>
+        </StackPane>
+    </center>
+
+</BorderPane>
+

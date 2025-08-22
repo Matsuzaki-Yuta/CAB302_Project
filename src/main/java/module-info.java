@@ -3,6 +3,8 @@ module com.example.cab302_project {
     requires javafx.fxml;
 
 
-    opens com.example.cab302_project to javafx.fxml;
-    exports com.example.cab302_project;
+    opens com.app.studysnap to javafx.fxml;
+    exports com.app.studysnap;
+    exports com.app.studysnap.controllers;
+    opens com.app.studysnap.controllers to javafx.fxml;
 }

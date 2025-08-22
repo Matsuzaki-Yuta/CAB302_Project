@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.app.studysnap.controllers.SignupController"
+            stylesheets="@styles/signup.css"
+            prefWidth="400" prefHeight="550">
+
+    <center>
+        <VBox alignment="CENTER" spacing="15" styleClass="auth-box">
+            <Label text="Create an Account" styleClass="title"/>
+
+            <TextField fx:id="nameField" promptText="Name"/>
+            <TextField fx:id="emailField" promptText="Email"/>
+            <PasswordField fx:id="passwordField" promptText="Password"/>
+            <PasswordField fx:id="confirmPasswordField" promptText="Confirm Password"/>
+
+            <Button text="Sign Up" onAction="#handleSignup" styleClass="auth-btn"/>
+
+            <Button text="Sign up with Google" styleClass="google-btn"/>
+
+            <Hyperlink text="Already have an account? Login" onAction="#goToLogin"/>
+        </VBox>
+    </center>
+</BorderPane>
