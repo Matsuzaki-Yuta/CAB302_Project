@@ -8,3 +8,7 @@
     -fx-border-radius: 8;
     -fx-background-radius: 8;
 }
+
+.text-field, .password-field {
+    -fx-max-width: 300px;
+}
