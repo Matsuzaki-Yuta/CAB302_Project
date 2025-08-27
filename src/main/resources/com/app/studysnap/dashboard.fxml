@@ -4,8 +4,7 @@
 
 <BorderPane fx:controller="com.app.studysnap.controllers.SignupController"
             stylesheets="@styles/dashboard.css"
-            xmlns:fx="http://javafx.com/fxml"
-            prefWidth="900" prefHeight="600">
+            xmlns:fx="http://javafx.com/fxml">
 
     <!-- Sidebar -->
     <left>

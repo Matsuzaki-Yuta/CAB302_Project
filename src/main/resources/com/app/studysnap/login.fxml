@@ -5,8 +5,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.app.studysnap.controllers.LoginController"
-            stylesheets="@styles/login.css"
-            prefWidth="400" prefHeight="500">
+            stylesheets="@styles/login.css">
 
     <center>
         <VBox alignment="CENTER" spacing="15" styleClass="auth-box">
@@ -15,10 +14,20 @@
             <TextField fx:id="emailField" promptText="Email"/>
             <PasswordField fx:id="passwordField" promptText="Password"/>
 
-            <Button text="Login" onAction="#handleLogin" styleClass="auth-btn"/>
+            <Button fx:id="loginButton"
+                    text="Login"
+                    onAction="#handleLogin"
+                    styleClass="auth-btn"
+            />
 
-            <Hyperlink text="Don't have an account? Sign up" onAction="#goToSignup"/>
-            <Hyperlink text="Forgot password?" />
+            <Hyperlink fx:id="toSignupLink"
+                       text="Don't have an account? Sign up"
+                       onAction="#goToSignup"
+            />
+            <Hyperlink fx:id="forgotPassLink"
+                       text="Forgot password?"
+                       onAction="#goToPassReset"
+            />
         </VBox>
     </center>
 </BorderPane>

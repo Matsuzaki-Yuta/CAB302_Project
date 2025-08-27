@@ -2,43 +2,25 @@ package com.app.studysnap;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class Main extends Application {
-    private static Scene scene;
+    public static final String TITLE = "StudySnap";
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("signup.fxml"));
-        scene = new Scene(fxmlLoader.load());
+        Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
 
-        stage.setTitle("StudySnap");
+        stage.setTitle(TITLE);
         stage.setScene(scene);
-
-        // fill the screen
-        stage = (Stage) scene.getWindow();
-        stage.setMaximized(true);
-
         stage.show();
     }
-
-    /** Simple screen navigation helper. */
-    public static void navigate(String fxmlFile) {
-        try {
-            Parent newRoot = FXMLLoader.load(
-                    Main.class.getResource("/com/app/studysnap/" + fxmlFile)
-            );
-            scene.setRoot(newRoot);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     public static void main(String[] args) {
         launch();

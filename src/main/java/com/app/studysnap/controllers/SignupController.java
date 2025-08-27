@@ -1,18 +1,26 @@
 package com.app.studysnap.controllers;
 
 import com.app.studysnap.Main;
+import com.app.studysnap.Navigator;
 import javafx.fxml.FXML;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class SignupController {
     @FXML private TextField nameField;
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
     @FXML private PasswordField confirmPasswordField;
+    @FXML private Button googleSignButton;
+    @FXML private Button signButton;
+    @FXML private Hyperlink toLoginLink;
 
     @FXML
-    private void handleSignup() {
+    private void handleSignup() throws IOException {
 
         // add validation & persistence later
         String name  = nameField.getText();
@@ -22,12 +30,19 @@ public class SignupController {
 
         System.out.println("[SIGNUP] " + name + " / " + email + " / " + pass1 + " / " + pass2);
 
+        // Todo: call auth
+
         // If ok, navigate to Log in or straight to app (add logic)
-        Main.navigate("login.fxml");
+        Navigator.goTo(signButton, "dashboard.fxml");
     }
 
     @FXML
-    private void goToLogin() {
-        Main.navigate("login.fxml");
+    private void handleGoogleSignup() throws IOException {
+        // Todo: feature research (Google Signup)
+    }
+
+    @FXML
+    private void goToLogin() throws IOException {
+        Navigator.goTo(toLoginLink, "login.fxml");
     }
 }
