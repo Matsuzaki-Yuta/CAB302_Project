@@ -1,0 +1,11 @@
+| Area                | Tools                 |                         |
+|---------------------|-----------------------|-------------------------|   
+| Java                | OpenJDK 21 (Corretto) |                         |
+| GUI (Client)        | JavaFX                |                         |
+| Auth                | ??                    |                         |
+| Backend             | ??                    |                         | 
+| Database            | SQL (SQLite, local?)  |                         |
+| Caching / Realtime  | ??                    |                         |
+| AI                  | OpenAI Java SDK ??    |                         |
+| Build & Test        | Maven, ...            |                         |
+| Version Control     | GitHub                |                         |
