@@ -11,6 +11,10 @@ import com.app.studysnap.model.User;
 import java.io.IOException;
 
 public class Main extends Application {
+    public static final String TITLE = "StudySnap";
+    public static final int WIDTH = 1280;
+    public static final int HEIGHT = 720;
+
     private static Scene scene;
 
     @Override
@@ -26,15 +30,19 @@ public class Main extends Application {
         stage.setMaximized(true);
         stage.show();
 
-        ///Run mock data after GUI starts
+        //Database logic
         SqliteUserDAO userDAO = new SqliteUserDAO();
-        //userDAO.seedMockUsers(); this used once for adding mock user data to Users table, but if run this more than once, spits out error due to the email unique constraint
+
+        //Seed mock users only once (disabled by default)
+        //userDAO.seedMockUsers();
+
+        //Print users from DB
         for (User user : userDAO.getAllUsers()) {
             System.out.println(user.getUserId() + " | " + user.getUsername() + " | " + user.getEmail());
         }
 
-        ///reset Users table
-        userDAO.resetUsersTable();
+        //reset Users table (disabled by default *be careful to use*)
+        //userDAO.resetUsersTable();
     }
 
     /** Simple screen navigation helper. */
