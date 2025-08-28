@@ -33,7 +33,7 @@ public class Main extends Application {
         //Database logic
         SqliteUserDAO userDAO = new SqliteUserDAO();
 
-        //Seed mock users only once (disabled by default)
+        //Populate the Users table with 3 mock users data (disabled by default). * Needs to comment after it's called once
         //userDAO.seedMockUsers();
 
         //Print users from DB
@@ -41,7 +41,7 @@ public class Main extends Application {
             System.out.println(user.getUserId() + " | " + user.getUsername() + " | " + user.getEmail());
         }
 
-        //reset Users table (disabled by default *be careful to use*)
+        //Reset Users table (disabled by default *be careful to use*).
         //userDAO.resetUsersTable();
     }
 
