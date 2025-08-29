@@ -3,7 +3,6 @@ package com.app.studysnap;
 import com.app.studysnap.model.SqliteUserDAO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import com.app.studysnap.model.User;
@@ -15,19 +14,13 @@ public class Main extends Application {
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
 
-    private static Scene scene;
-
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("signup.fxml"));
-        scene = new Scene(fxmlLoader.load());
+        Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
 
-        stage.setTitle("StudySnap");
+        stage.setTitle(TITLE);
         stage.setScene(scene);
-
-        // fill the screen
-        stage = (Stage) scene.getWindow();
-        stage.setMaximized(true);
         stage.show();
 
         //Database logic
@@ -41,21 +34,8 @@ public class Main extends Application {
             System.out.println(user.getUserId() + " | " + user.getUsername() + " | " + user.getEmail());
         }
 
-        //Reset Users table (disabled by default *be careful to use*).
+        //Reset Users table.
         //userDAO.resetUsersTable();
-    }
-
-    /** Simple screen navigation helper. */
-    public static void navigate(String fxmlFile) {
-        try {
-            Parent newRoot = FXMLLoader.load(
-                    Main.class.getResource("/com/app/studysnap/" + fxmlFile)
-            );
-            scene.setRoot(newRoot);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     public static void main(String[] args) {
