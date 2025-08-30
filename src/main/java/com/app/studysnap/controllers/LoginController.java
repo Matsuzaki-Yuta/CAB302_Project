@@ -1,10 +1,9 @@
 package com.app.studysnap.controllers;
 import com.app.studysnap.Navigator;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import com.app.studysnap.auth.AuthService;
+import com.app.studysnap.auth.Session;
+import com.app.studysnap.model.SqliteUserDAO;
 
-import com.app.studysnap.Main;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -17,18 +16,24 @@ public class LoginController {
     @FXML private Hyperlink toSignupLink;
     @FXML private Hyperlink forgotPassLink;
 
+    private final AuthService auth = new AuthService(new SqliteUserDAO());
+
     @FXML
-    private void handleLogin() throws IOException {
+    private void handleLogin() {
+        try {
+            var user = auth.loginWithEmail(emailField.getText(), passwordField.getText());
+            Session.setCurrentUser(user);
+            Navigator.goTo(loginButton, "dashboard.fxml");
+        } catch (IllegalArgumentException ex) {
+            showError(ex.getMessage());
+        } catch (Exception ex) {
+            showError("Unexpected error. Please try again.");
+            ex.printStackTrace();
+        }
+    }
 
-        // add real auth later
-        String email = emailField.getText();
-        String pass  = passwordField.getText();
-        System.out.println("[LOGIN] " + email + " / " + pass);
-
-        // Todo: Call Auth
-
-        // On success, navigate to dashboard scene (add logic)
-        Navigator.goTo(loginButton, "dashboard.fxml");
+    private void showError(String msg) {
+        new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).showAndWait();
     }
 
     @FXML

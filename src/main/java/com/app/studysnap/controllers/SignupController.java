@@ -1,12 +1,11 @@
 package com.app.studysnap.controllers;
 
-import com.app.studysnap.Main;
 import com.app.studysnap.Navigator;
+import com.app.studysnap.auth.AuthService;
+import com.app.studysnap.model.SqliteUserDAO;
+
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -19,21 +18,36 @@ public class SignupController {
     @FXML private Button signButton;
     @FXML private Hyperlink toLoginLink;
 
+    private final AuthService auth = new AuthService(new SqliteUserDAO());
+
     @FXML
-    private void handleSignup() throws IOException {
+    private void handleSignup() {
+        try {
+            String username = nameField.getText();
+            String email = emailField.getText();
+            String password = passwordField.getText();
+            String confirmPassword = confirmPasswordField.getText();
 
-        // add validation & persistence later
-        String name  = nameField.getText();
-        String email = emailField.getText();
-        String pass1 = passwordField.getText();
-        String pass2 = confirmPasswordField.getText();
+            if (!password.equals(confirmPassword)) {
+                showError("Passwords do not match.");
+                return; // stop signup
+            }
 
-        System.out.println("[SIGNUP] " + name + " / " + email + " / " + pass1 + " / " + pass2);
+            auth.register(username, email, password);
+            new Alert(Alert.AlertType.INFORMATION, "Account created! Please log in.", ButtonType.OK).showAndWait();
+            Navigator.goTo(signButton, "login.fxml");
 
-        // Todo: call auth
+        } catch (IllegalArgumentException ex) {
+            showError(ex.getMessage());
+        } catch (Exception ex) {
+            showError("Unexpected error. Please try again.");
+            ex.printStackTrace();
+        }
+    }
 
-        // If ok, navigate to Log in or straight to app (add logic)
-        Navigator.goTo(signButton, "dashboard.fxml");
+
+    private void showError(String msg) {
+        new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).showAndWait();
     }
 
     @FXML

@@ -7,11 +7,14 @@ import java.util.List;
  * the CRUD operations for the User class with the database.
  */
 public interface IUserDAO {
-    void addUser(User user);
+    int addUser(User user);
     void updateUser(User user);
     void deleteUser(int userId);
     List<User> getAllUsers();
     User getUserById(int userId);
     User getUserByUsername(String username);
+    User getUserByEmail(String email);
+    boolean emailExists(String email);
+    boolean usernameExists(String username);
 }
 

@@ -31,26 +31,20 @@ public class SqliteUserDAO implements IUserDAO {
         }
     }
 
-    /// This receives a User object, adds it to the database in the Users table
+    /// This receives a User object, adds it to the database in the Users table and returns the ID
     @Override
-    public void addUser(User user) {
-        try {
-            PreparedStatement statement = connection.prepareStatement(
-                    "INSERT INTO Users (username, email, password) VALUES (?, ?, ?)",
-                    Statement.RETURN_GENERATED_KEYS
-            );
-            statement.setString(1, user.getUsername());
-            statement.setString(2, user.getEmail());
-            statement.setString(3, user.getPassword());
-            statement.executeUpdate();
-
-            ResultSet generatedKeys = statement.getGeneratedKeys();
-            if (generatedKeys.next()) {
-                user.setUserId(generatedKeys.getInt(1));
+    public int addUser(User user) {
+        String sql = "INSERT INTO Users(username, email, password) VALUES(?,?,?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getEmail());
+            ps.setString(3, user.getPassword()); // add encryption
+            ps.executeUpdate();
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                if (rs.next()) return rs.getInt(1);
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        } catch (Exception e) { e.printStackTrace(); }
+        return -1;
     }
 
     /// This updates the user
@@ -87,42 +81,79 @@ public class SqliteUserDAO implements IUserDAO {
     /// This returns the list of all the users in the database
     @Override
     public List<User> getAllUsers() {
-        List<User> users = new ArrayList<>();
-        try {
-            Statement statement = connection.createStatement();
-            String query = "SELECT * FROM Users";
-            ResultSet resultSet = statement.executeQuery(query);
-            while (resultSet.next()) {
-                int user_id = resultSet.getInt("user_id");
-                String username = resultSet.getString("username");
-                String email = resultSet.getString("email");
-                String password = resultSet.getString("password");
-
-                User user = new User();
-                user.setUserId(user_id);
-                user.setUsername(username);
-                user.setEmail(email);
-                user.setPassword(password);
-
-                users.add(user);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return users;
+        List<User> list = new ArrayList<>();
+        try (PreparedStatement ps = connection.prepareStatement("SELECT user_id, username, email, password FROM Users");
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) list.add(mapRow(rs));
+        } catch (Exception e) { e.printStackTrace(); }
+        return list;
     }
 
     //Add additional function as required
     @Override
     public User getUserById(int userId) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT user_id, username, email, password FROM Users WHERE user_id=?")) {
+            ps.setInt(1, userId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return mapRow(rs);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
 
     @Override
     public User getUserByUsername(String username) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT user_id, username, email, password FROM Users WHERE username=?")) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return mapRow(rs);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
 
+    @Override
+    public User getUserByEmail(String email) {
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT user_id, username, email, password FROM Users WHERE email=?")) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return mapRow(rs);
+            }
+        } catch (Exception e) { e.printStackTrace(); }
+        return null;
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT 1 FROM Users WHERE email=?")) {
+            ps.setString(1, email);
+            try (ResultSet rs = ps.executeQuery()) { return rs.next(); }
+        } catch (Exception e) { e.printStackTrace(); }
+        return false;
+    }
+
+    @Override
+    public boolean usernameExists(String username) {
+        try (PreparedStatement ps = connection.prepareStatement("SELECT 1 FROM Users WHERE username=?")) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) { return rs.next(); }
+        } catch (Exception e) { e.printStackTrace(); }
+        return false;
+    }
+
+    private User mapRow(ResultSet rs) throws Exception {
+        User u = new User();
+        u.setUserId(rs.getInt("user_id"));
+        u.setUsername(rs.getString("username"));
+        u.setEmail(rs.getString("email"));
+        u.setPassword(rs.getString("password"));
+        return u;
+    }
+
+    // DEBUGGING
     // Add 3 user mock data for testing purposes *use the same email once, as it has a unique constraint
     public void seedMockUsers(){
         addUser(new User("test1", "email1@gmail.com", "password1"));

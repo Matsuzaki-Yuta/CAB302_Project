@@ -33,9 +33,6 @@ public class Main extends Application {
         for (User user : userDAO.getAllUsers()) {
             System.out.println(user.getUserId() + " | " + user.getUsername() + " | " + user.getEmail());
         }
-
-        //Reset Users table.
-        //userDAO.resetUsersTable();
     }
 
     public static void main(String[] args) {
