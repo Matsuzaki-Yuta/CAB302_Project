@@ -1,0 +1,54 @@
+@import "style.css";
+
+.label.section-title {
+-fx-font-size: 16px;
+-fx-font-weight: bold;
+}
+
+.label.muted {
+-fx-text-fill: #6b7280;
+}
+
+.button.primary {
+-fx-background-color: #5b8cff;
+-fx-text-fill: white;
+-fx-background-radius: 10;
+}
+.button.primary:hover { -fx-opacity: 0.9; }
+
+.button.success {
+-fx-background-color: #10b981;
+-fx-text-fill: white;
+-fx-background-radius: 10;
+}
+.button.success:hover { -fx-opacity: 0.95; }
+
+.dropzone {
+-fx-border-color: #aab;
+-fx-border-style: segments(10, 10) line-cap round;
+-fx-border-radius: 12;
+-fx-background-radius: 12;
+-fx-background-color: #f6f8ff;
+-fx-padding: 16;
+}
+
+.dropzone-title { -fx-font-weight: bold; }
+
+.tab-pane {
+    -fx-background-color: transparent;
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+.tab-pane > .tab-content-area {
+    -fx-background-color: white;
+    -fx-background-insets: 0;
+    -fx-background-radius: 8;
+    -fx-padding: 12;
+}
+
+.text-area {
+-fx-background-radius: 10;
+}
