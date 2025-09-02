@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.app.studysnap.controllers.HomeController">
+
+    <children>
+        <Label fx:id="welcomeLabel"
+               layoutX="30"
+               layoutY="30"
+               styleClass="title"
+               text="Welcome!" />
+    </children>
+
+</AnchorPane>

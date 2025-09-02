@@ -2,27 +2,39 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
 
-<BorderPane fx:controller="com.app.studysnap.controllers.SignupController"
+<BorderPane fx:controller="com.app.studysnap.controllers.DashboardController"
             stylesheets="@styles/dashboard.css"
             xmlns:fx="http://javafx.com/fxml">
 
     <!-- Sidebar -->
     <left>
-        <VBox styleClass="sidebar" spacing="10" alignment="TOP_CENTER">
-            <Label text="📊 StudySnap" styleClass="sidebar-title"/>
-            <Button text="Home" styleClass="sidebar-btn"/>
-            <Button text="Profile" styleClass="sidebar-btn"/>
-            <Button text="Settings" styleClass="sidebar-btn"/>
-            <Button text="Logout" styleClass="sidebar-btn"/>
-        </VBox>
+        <!-- Use a BorderPane so Logout can be fixed at bottom -->
+        <BorderPane styleClass="sidebar">
+            <top>
+                <VBox spacing="10" alignment="TOP_CENTER">
+                    <Label text="🎓 StudySnap" styleClass="sidebar-title"/>
+
+                    <Button text="Home"     styleClass="sidebar-btn" onAction="#handleNav" userData="home.fxml"/>
+                    <Button text="Profile"  styleClass="sidebar-btn" onAction="#handleNav" userData="profile.fxml"/>
+                    <Button text="Quiz Gen" styleClass="sidebar-btn" onAction="#handleNav" userData="QuizGen.fxml"/>
+                    <Button text="Study Groups" styleClass="sidebar-btn" onAction="#handleNav" userData="StudyGroups.fxml"/>
+                </VBox>
+            </top>
+
+            <!-- Fixed-bottom Logout -->
+            <bottom>
+                <VBox alignment="BOTTOM_CENTER" spacing="10" styleClass="sidebar">
+                    <Button text="Logout" styleClass="sidebar-btn" onAction="#handleLogout"/>
+                </VBox>
+            </bottom>
+        </BorderPane>
     </left>
 
-    <!-- Main content -->
+    <!-- Main content target -->
     <center>
-        <StackPane styleClass="main-content">
+        <StackPane fx:id="contentArea" styleClass="main-content">
             <Label text="Main Content Area" styleClass="placeholder"/>
         </StackPane>
     </center>
 
 </BorderPane>
-
