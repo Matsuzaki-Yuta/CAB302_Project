@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class SignupController {
     @FXML private TextField nameField;
@@ -49,7 +50,7 @@ public class SignupController {
     }
 
     @FXML
-    private void handleGoogleSignup() {
+    private void handleGoogleSignup() throws IOException {
         try {
             GoogleAuthService googleAuth = new GoogleAuthService();
             var userInfo = googleAuth.login();
@@ -65,7 +66,11 @@ public class SignupController {
             Navigator.goTo(googleSignButton, "dashboard.fxml");
 
         } catch (IllegalArgumentException ex) {
-            showError(ex.getMessage());
+            String message = ex.getMessage();
+            showError(message);
+            if (Objects.equals(message, "An account with this email uses a password. Use email login.")) {
+                goToLogin();
+            }
         } catch (Exception e) {
             showError("Google signup failed: " + e.getMessage());
             e.printStackTrace();
