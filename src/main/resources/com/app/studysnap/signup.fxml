@@ -23,7 +23,7 @@
             />
 
             <Button fx:id="googleSignButton"
-                    text="Sign up with Google"
+                    text="Sign in with Google"
                     onAction="#handleGoogleSignup"
                     styleClass="google-btn"
             />
