@@ -2,8 +2,11 @@ package com.app.studysnap.controllers;
 
 import com.app.studysnap.Navigator;
 import com.app.studysnap.auth.AuthService;
+import com.app.studysnap.auth.GoogleAuthService;
+import com.app.studysnap.auth.Session;
 import com.app.studysnap.model.SqliteUserDAO;
 
+import com.app.studysnap.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
@@ -45,14 +48,32 @@ public class SignupController {
         }
     }
 
+    @FXML
+    private void handleGoogleSignup() {
+        try {
+            GoogleAuthService googleAuth = new GoogleAuthService();
+            var userInfo = googleAuth.login();
+
+            String name = userInfo.getName();
+            if (name == null || name.isBlank()) name = userInfo.getEmail().split("@")[0];
+
+            auth.registerGoogleUser(name, userInfo.getEmail(), userInfo.getId());
+
+            User u = auth.loginWithGoogle(userInfo.getId(), userInfo.getEmail(), userInfo.getName());
+            Session.setCurrentUser(u);
+            new Alert(Alert.AlertType.INFORMATION, "Welcome, " + u.getUsername(), ButtonType.OK).showAndWait();
+            Navigator.goTo(googleSignButton, "dashboard.fxml");
+
+        } catch (IllegalArgumentException ex) {
+            showError(ex.getMessage());
+        } catch (Exception e) {
+            showError("Google signup failed: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
     private void showError(String msg) {
         new Alert(Alert.AlertType.ERROR, msg, ButtonType.OK).showAndWait();
-    }
-
-    @FXML
-    private void handleGoogleSignup() throws IOException {
-        // Todo: feature research (Google Signup)
     }
 
     @FXML

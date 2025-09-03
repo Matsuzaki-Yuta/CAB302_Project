@@ -20,6 +20,12 @@
                     styleClass="auth-btn"
             />
 
+            <Button fx:id="googleLoginButton"
+                    text="Sign in with Google"
+                    onAction="#handleGoogleLogin"
+                    styleClass="google-btn"
+            />
+
             <Hyperlink fx:id="toSignupLink"
                        text="Don't have an account? Sign up"
                        onAction="#goToSignup"

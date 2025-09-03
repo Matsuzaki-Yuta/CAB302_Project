@@ -16,5 +16,7 @@ public interface IUserDAO {
     User getUserByEmail(String email);
     boolean emailExists(String email);
     boolean usernameExists(String username);
+    User getUserByGoogleSub(String googleSub);
+    int addGoogleUser(String username, String email, String googleSub);
 }
 

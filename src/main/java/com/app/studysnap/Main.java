@@ -31,7 +31,7 @@ public class Main extends Application {
 
         //Print users from DB
         for (User user : userDAO.getAllUsers()) {
-            System.out.println(user.getUserId() + " | " + user.getUsername() + " | " + user.getEmail());
+            System.out.println(user.getUserId() + " | " + user.getUsername() + " | " + user.getEmail() + " | " + user.getAuthProvider());
         }
     }
 

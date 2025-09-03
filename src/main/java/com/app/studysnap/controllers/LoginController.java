@@ -1,15 +1,18 @@
 package com.app.studysnap.controllers;
 import com.app.studysnap.Navigator;
 import com.app.studysnap.auth.AuthService;
+import com.app.studysnap.auth.GoogleAuthService;
 import com.app.studysnap.auth.Session;
 import com.app.studysnap.model.SqliteUserDAO;
 
+import com.app.studysnap.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import java.io.IOException;
 
 public class LoginController {
+    @FXML public Button googleLoginButton;
     @FXML private TextField emailField;
     @FXML private PasswordField passwordField;
     @FXML private Button loginButton;
@@ -29,6 +32,23 @@ public class LoginController {
         } catch (Exception ex) {
             showError("Unexpected error. Please try again.");
             ex.printStackTrace();
+        }
+    }
+
+    @FXML
+    private void handleGoogleLogin() {
+        try {
+            GoogleAuthService googleAuth = new GoogleAuthService();
+            var userInfo = googleAuth.login();
+            User u = auth.loginWithGoogle(userInfo.getId(), userInfo.getEmail(), userInfo.getName());
+            Session.setCurrentUser(u);
+            new Alert(Alert.AlertType.INFORMATION, "Welcome, " + u.getUsername(), ButtonType.OK).showAndWait();
+            Navigator.goTo(googleLoginButton, "dashboard.fxml");
+        } catch (IllegalArgumentException ex) {
+            showError(ex.getMessage());
+        } catch (Exception e) {
+            showError("Google login failed: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
